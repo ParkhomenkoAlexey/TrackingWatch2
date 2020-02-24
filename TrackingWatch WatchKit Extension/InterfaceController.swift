@@ -11,7 +11,25 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
-
+    
+    
+    @IBOutlet weak var time: WKInterfaceLabel!
+    @IBOutlet weak var steps: WKInterfaceLabel!
+    @IBOutlet weak var distance: WKInterfaceLabel!
+    @IBOutlet weak var button: WKInterfaceButton!
+    
+    var isTrackingRunning: Bool = false
+    
+    
+    @IBAction func updateTapped() {
+        if isTrackingRunning {
+            button.setTitle("Start Updating")
+        } else {
+            button.setTitle("Stop Updating")
+        }
+        isTrackingRunning = !isTrackingRunning
+    }
+    
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
