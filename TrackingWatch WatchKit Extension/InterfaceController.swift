@@ -12,20 +12,24 @@ import Foundation
 
 class InterfaceController: WKInterfaceController {
     
-    
     @IBOutlet weak var time: WKInterfaceLabel!
     @IBOutlet weak var steps: WKInterfaceLabel!
     @IBOutlet weak var distance: WKInterfaceLabel!
     @IBOutlet weak var button: WKInterfaceButton!
     
     var isTrackingRunning: Bool = false
-    
+    let activityService = ActivityService()
     
     @IBAction func updateTapped() {
         if isTrackingRunning {
+            self.steps.setText("Steps : N/A")
+            self.distance.setText("Distance : N/A")
+            self.time.setText("Time : N/A")
             button.setTitle("Start Updating")
+            activityService.stopMonitoring()
         } else {
             button.setTitle("Stop Updating")
+            activityService.startMonitoring()
         }
         isTrackingRunning = !isTrackingRunning
     }
@@ -33,7 +37,9 @@ class InterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        // Configure interface objects here.
+        activityService.delegate = self
+        activityService.isStepCountingAvailable ? steps.setTextColor(.green) : steps.setTextColor(.red)
+        activityService.isDistanceAvailable ? distance.setTextColor(.green) : distance.setTextColor(.red)
     }
     
     override func willActivate() {
@@ -46,4 +52,12 @@ class InterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
 
+}
+
+extension InterfaceController: CountingDelegate {
+    func countingParams(steps: Int, distance: Double, workoutSeconds: Int) {
+        self.steps.setText("Steps : \(steps)")
+        self.distance.setText("Distance : \(distance.getDistanceString())")
+        self.time.setText("Time : \(workoutSeconds.secondsToHoursMinutesSeconds())")
+    }
 }

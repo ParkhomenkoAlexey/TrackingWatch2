@@ -12,6 +12,7 @@
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="TrackingWatch_WatchKit_App" customModuleProvider="target">
                     <items>
                         <label alignment="left" text="Time: N/A" id="G7t-vC-7cf">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                         </label>
                         <label alignment="left" text="Steps: N/A" id="8YB-Bc-M21">
